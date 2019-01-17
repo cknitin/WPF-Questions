@@ -19,9 +19,6 @@ WPF uses User32 in a limited capacity to handle the routing of your input contro
 and keyboard, for instance). However, all drawing functions have been passed on through
 DirectX to provide monumental improvements in performance.
 
-## Resources in WPF
-Resources are values stored in a dictionary, Generally we provide a key and get back some sort of objects.
-
 ### User32 in a limited capacity
 
 WPF uses User32 in a limited capacity to handle the routing of your input controls (your mouse and keyboard, for instance). However, all drawing functions have been passed on through DirectX to provide monumental improvements in performance.
@@ -39,7 +36,7 @@ version level is higher than or equal to version 9.0.
 ### Rendering Tier 2: Most graphics features use graphics hardware acceleration. The DirectX
 version level is higher than or equal to version 9.0.
 
-### Layout controls
+## Layout controls
 
 1. Grid
 
@@ -104,7 +101,7 @@ Takes as much space as available (after filling all auto and fixed sized columns
         </Canvas>
 
 
-### Type Converters
+## Type Converters
 
 The System.ComponentModel.TypeConverter class provides a unified way of converting XAML string attribute values to corresponding object value types. 
 
@@ -115,8 +112,116 @@ The System.ComponentModel.TypeConverter class provides a unified way of converti
  We've specified the Background attribute on each of the button controls. In the first button, we simply specified the string name of
 the color we wanted to use as the background. For the second button we specified the RGB values as a three digit hex value. The System.Drawing.ColorConverter class is responsible for providing this functionality.
 
+### Implementing a TypeConverter
+A class provides a unified way of converting XAML string attribute values to corresponding object value types. 
+
+### CanConvertTo()
+A support method that returns a Boolean indicating whether the value can be converted to the specified type.
+
+### CanConvertFrom()
+A support method that returns a Boolean indicating whether the value can be converted from a specified type.
+
+### ConvertTo() 
+Converts the given value object to the specified type.
+
+### ConvertFrom() 
+Converts the given value to the type of this converter.
+
+You must apply the TypeConverterAttribute to the class that implements TypeConverter.Here is an example of the use of the attribute [TypeConverter(typeof(MyCustomConverter))].
+
+                public class StringListTypeConverter : TypeConverter
+                {
+                    public override bool CanConvertFrom(ITypeDescriptorContext context, 
+                        Type sourceType)
+                    {
+                      return sourceType == typeof(string);
+                    }
+
+                    public override object ConvertFrom(ITypeDescriptorContext context,
+                        System.Globalization.CultureInfo culture, object value)
+                    {
+                      return new StringList((string)value);
+                    }
+
+                    public override bool CanConvertTo(ITypeDescriptorContext context, 
+                        Type destinationType)
+                    {
+                      return destinationType == typeof(string);
+                    }
+
+                    public override object ConvertTo(ITypeDescriptorContext context,
+                        System.Globalization.CultureInfo culture, object value, Type destinationType)
+                    {
+                      return value == null ? null : string.Join(", ", (StringList)value);
+                    }
+                }
 
 
+                [TypeConverter(typeof(StringListTypeConverter))]
+                class StringList : IEnumerable<string>
+                {
+                    private readonly IEnumerable<string> _enumerable;
+                    private readonly string _original;
+
+                    public StringList(string value)
+                    {
+                      _original = value;
+                      if (!string.IsNullOrEmpty(value))
+                      {
+                        _enumerable = value.Split(",;".ToCharArray()).
+                          Where(i => !string.IsNullOrWhiteSpace(i)).Select(i => i.Trim());
+                      }
+                    }
+
+                    protected StringList(IEnumerable<string> value)
+                    {
+                      _enumerable = value;
+                      _original = string.Join(", ", value);
+                    }
+
+                    public StringList() { }
+
+                    public IEnumerator<string> GetEnumerator()
+                    {
+                      return _enumerable.GetEnumerator();
+                    }
+
+                    IEnumerator IEnumerable.GetEnumerator()
+                    {
+                      return _enumerable.GetEnumerator();
+                    }
+
+                    public override string ToString()
+                    {
+                      return _original;
+                    }
+                }
+
+
+        <Window x:Class="TypeConverterExample.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:TypeConverterExample" Title="TypeConverter Binding Example" Height="250" Width="375">
+          <Window.DataContext>
+            <local:ViewModel />
+          </Window.DataContext>
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBox Grid.Row="0" Text="{Binding Source}"/>
+            <ListBox Grid.Row="1" ItemsSource="{Binding Source, Mode=TwoWay}"/>
+          </Grid>
+        </Window>
+
+## Using the TypeConverter Directly
+
+        TypeConverter converter = TypeDescriptor.GetConverter(targetType);
+        string convertedValue = converter.ConvertFrom(value);
+
+
+## Resources in WPF
+Resources are values stored in a dictionary, Generally we provide a key and get back some sort of objects.
 ### 1.Windows Resources
 
         <Window.Resources>
