@@ -34,10 +34,11 @@ Resources are values stored in a dictionary, Generally we provide a key and get 
       </Application>
       
 In WPF there are two types of resources
-1.Static Resource
-2.Dynamic Resources
+### 1.Static Resource
+### 2.Dynamic Resources
 
-Static Resource - it is resolved at compile time, i.e. value of the object is set when you are working with XAML.
+### Static Resource 
+it is resolved at compile time, i.e. value of the object is set when you are working with XAML.
 
       <Window.Resources>
               <SolidColorBrush Color="Red" x:Key="RedSolidBrush"></SolidColorBrush>
@@ -46,7 +47,8 @@ Static Resource - it is resolved at compile time, i.e. value of the object is se
       <Button Content="Click Me!!" Background="{StaticResource RedSolidBrush}" Height="60" Width="160"></Button>
 
 
-Dynamic Resource - It is resolved at run time. The value of object is evaluated and stored in an expression and the value is substituted at run time. Use for localization of application.
+### Dynamic Resource 
+It is resolved at run time. The value of object is evaluated and stored in an expression and the value is substituted at run time. Use for localization of application.
 
       <StackPanel Orientation="Horizontal">
         <Button Content="Button" Background="{ DynamicResource ResourceKey=ChangeButtonColor} " Height="68" Width="118" />
@@ -66,7 +68,7 @@ Dynamic Resource - It is resolved at run time. The value of object is evaluated 
           this.Resources["ChangeButtonColor"] = new SolidColorBrush { Color = Colors.Blue };
        } 
 
-Style Inheritance
+### Style Inheritance
 
 Use BasedOn attributes to use inheritance.
 
@@ -84,7 +86,7 @@ Use BasedOn attributes to use inheritance.
               </Style>
       </Application.Resources>
 
-Merging Dictionary 
+### Merging Dictionary 
 
 Set Theme at run time
 
