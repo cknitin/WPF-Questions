@@ -165,3 +165,40 @@ Set Theme at run time
                 }
             }
         }
+        
+## Routed Events
+### 1.Direct Event
+### 2.Tunneling Event
+### 3.Bubbling Event 
+
+## Dependency Properties
+WPF has provided some extended services to the CLR property that we can collectively call Dependency Properties. A Dependency Property is a property whose value depends on the external sources, such as animation, data binding, styles, or visual tree inheritance. Not only this, but a Dependency Property also has the built-in feature of providing notification when the property has changed, data binding and styling.
+
+### Key features
+1.Style
+2.Callbacks
+3.Animation
+4.Resource
+5.Data Binding
+Etc
+
+### Less memory consumption
+The Dependency Property stores the property only when it is altered or modified. Hence a huge amount of memory for fields are free.
+
+### Property value inheritance
+It means that if no value is set for the property then it will return to the inheritance tree up to where it gets the value.
+
+### Change notification and Data Bindings
+Whenever a property changes its value it provides notification in the Dependency Property using INotifyPropertyChange and also helps in data binding.
+
+### Participation in animation, styles and templates
+A Dependency Property can animate, set styles using style setters and even provide templates for the control.
+
+### CallBacks
+Whenever a property is changed you can have a callback invoked.
+
+### Resources
+You can define a Resource for the definition of a Dependency Property in XAML.
+
+### Overriding Metadata
+You can define certain behavior of a Dependency Property using PropertyMetaData. Thus, overriding a meta data from a derived property will not require you to redefine or re-implement the entire property definition.
