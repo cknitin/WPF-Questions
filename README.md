@@ -251,6 +251,9 @@ The base class that adds support for styles, data binding, resources, and a few 
 ### FrameworkContentElement:
 The analog to FrameworkElement for content. 
 
+### Control:
+The base class for familiar controls such as Button, ListBox, and StatusBar. Control adds many properties to its FrameworkElement base class, such as Foreground, Background, and FontSize. Controls also support templates that enable you to completely replace their visual
+tree.
 
 ## Resources in WPF
 Resources are values stored in a dictionary, Generally we provide a key and get back some sort of objects.
