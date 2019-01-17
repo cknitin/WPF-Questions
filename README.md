@@ -584,10 +584,20 @@ Grid class may have GetRow() and SetRow()
                      </TextBlock>
 
 ## Binding Modes
+
 ### 1.OneWay
+When Source property update the target property will update.
+
 ### 2.TwoWay
+The TwoWay binding causes changes to either the source property or the target property to automatically update the other
+
 ### 3.OneWayToSource
+OneWayToSource is the reverse of OneWay binding; it updates the source property when the target property changes. 
+
+
 ### 4.OneTime
+Source property will update the target property only once.
+
 ### 5.Default
 
 ## UpdateSourceTrigger
