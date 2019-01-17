@@ -1,9 +1,30 @@
 # WPF
 
+### User32 and GDI/GDI+
+
+GDI/GDI+ has provided drawing support to the Windows OS for rendering as images, shapes, and text. These technologies are known to be relatively complicated to use and they provide poor performance. The User32 subsystem has provided the common look and feel for Windows
+elements such as buttons, text boxes, windows, etc.
+
+###  DirectX
+
+DirectX was an effort to provide a toolkit to allow developers to create video games that could bypass the limitations of the GDI/User32 subsystems. The DirectX API was extremely complex and therefore it was not ideal for creating business application user interfaces.
+
+### WPF
+
+WPF is the most comprehensive graphical technology to build Business application for windows. WPF uses DirectX behind the scenes to render graphical content, allowing WPF to take advantage of hardware acceleration. This means that your applications will use
+your GPU (your graphics card’s processor) as much as possible when rendering your WPF applications.
+
+### User32 Limitations
+WPF uses User32 in a limited capacity to handle the routing of your input controls (your mouse
+and keyboard, for instance). However, all drawing functions have been passed on through
+DirectX to provide monumental improvements in performance.
+
 ## Resources in WPF
 Resources are values stored in a dictionary, Generally we provide a key and get back some sort of objects.
 
-### Resources can be declared as
+### User32 in a limited capacity
+
+WPF uses User32 in a limited capacity to handle the routing of your input controls (your mouse and keyboard, for instance). However, all drawing functions have been passed on through DirectX to provide monumental improvements in performance.
 
 ### 1.Windows Resources
 
