@@ -26,6 +26,19 @@ Resources are values stored in a dictionary, Generally we provide a key and get 
 
 WPF uses User32 in a limited capacity to handle the routing of your input controls (your mouse and keyboard, for instance). However, all drawing functions have been passed on through DirectX to provide monumental improvements in performance.
 
+### WPF and Windows 7/Windows Vista
+WPF will perform best under Windows 7 or Windows Vista. This is because these operating systems allow the technology to take advantage of the Windows Display Driver Model (WDDM). WDDM allows scheduling of multiple GPU operations at the same time. It also provides a
+mechanism to page video card memory with normal system memory when the video card memory threshold is exceeded. One of the first jobs of the WPF infrastructure is to evaluate your video card and provide a score or rating called a tier value. WPF recognizes three distinct tier values. The tier value descriptions follow, as provided by the Microsoft Developer Network documentation on WPF, available at https://msdn.microsoft.com/en-us/library/ms742196(v=vs.100).aspx:
+
+### Rendering Tier 0: No graphics hardware acceleration. All graphics features use software
+acceleration. The DirectX version level is lower than version 9.0.
+
+### Rendering Tier 1: Some graphics features use graphics hardware acceleration. The DirectX
+version level is higher than or equal to version 9.0.
+
+### Rendering Tier 2: Most graphics features use graphics hardware acceleration. The DirectX
+version level is higher than or equal to version 9.0.
+
 ### 1.Windows Resources
 
         <Window.Resources>
