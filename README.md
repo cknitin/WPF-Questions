@@ -51,6 +51,22 @@ Star (*) -
 Takes as much space as available (after filling all auto and fixed sized columns), proportionally divided over all star-sized columns. So 3*/5* means the same as 30*/50*. Remember that star sizing does not work if the grid size is calculated based on its content.
 
 2. Stack Panel
+
+        <StackPanel>
+                 <TextBlock Margin="10" FontSize="20">How do you like your coffee?</TextBlock>
+                 <Button Margin="10">Black</Button>
+                 <Button Margin="10">With milk</Button>
+                 <Button Margin="10">Latte macchiato</Button>
+                 <Button Margin="10">Cappuccino</Button>
+         </StackPanel>
+         
+ OR
+ 
+        <StackPanel <span style="color:yellow"> Orientation="Horizontal" </span> Height="49" Width="247">
+                 <Button Width="100" Margin="10">OK</Button>
+                 <Button Width="100" Margin="10">Cancel</Button>
+         </StackPanel>
+
 3. Dock Panel
 
         <DockPanel LastChildFill="True">
