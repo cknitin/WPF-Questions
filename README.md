@@ -39,6 +39,22 @@ version level is higher than or equal to version 9.0.
 ### Rendering Tier 2: Most graphics features use graphics hardware acceleration. The DirectX
 version level is higher than or equal to version 9.0.
 
+### Layout controls
+
+1. Grid
+
+Methods for Sizing Grid Columns and Rows
+
+Fixed - Fixed size of logical units (1/96 inch).
+Auto-  Takes as much space as needed by the contained control.
+Star (*) -
+Takes as much space as available (after filling all auto and fixed sized columns), proportionally divided over all star-sized columns. So 3*/5* means the same as 30*/50*. Remember that star sizing does not work if the grid size is calculated based on its content.
+
+2. Stack Panel
+3. Dock Panel
+4. Wrap Panel
+5. Canvas
+
 ### 1.Windows Resources
 
         <Window.Resources>
