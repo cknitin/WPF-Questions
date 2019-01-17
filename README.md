@@ -104,6 +104,18 @@ Takes as much space as available (after filling all auto and fixed sized columns
         </Canvas>
 
 
+### Type Converters
+
+The System.ComponentModel.TypeConverter class provides a unified way of converting XAML string attribute values to corresponding object value types. 
+
+        <Button x:Name="btnDisplayButton" Grid.Column="1" Grid.Row="0" Background="Blue" 
+        
+        <Button x:Name="btnHexRGBColor" Grid.Column="1" Grid.Row="1" Background="#299" Content="Button" Width="100" Height="40" />
+
+ We've specified the Background attribute on each of the button controls. In the first button, we simply specified the string name of
+the color we wanted to use as the background. For the second button we specified the RGB values as a three digit hex value. The System.Drawing.ColorConverter class is responsible for providing this functionality.
+
+
 
 ### 1.Windows Resources
 
