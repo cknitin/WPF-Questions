@@ -214,10 +214,42 @@ You must apply the TypeConverterAttribute to the class that implements TypeConve
           </Grid>
         </Window>
 
-## Using the TypeConverter Directly
+### Using the TypeConverter Directly
 
         TypeConverter converter = TypeDescriptor.GetConverter(targetType);
         string convertedValue = converter.ConvertFrom(value);
+
+## The core WPF class hierarchy 
+
+### Object:
+The base class for all .NET classes.
+
+### DispatcherObject: 
+This is a base class for any object that can only be accessed on the thread for which the object was created. Most WPF classes derive from DisaptcherObject, so naturally the ones that do are not thread-safe.
+
+### DependencyObject:
+This is the base class for any object that has the ability to support DependencyProperties.
+
+### DependencyProperties: 
+The base class provides the GetValue and SetValue methods,which DependencyProperties must use in order to work.
+
+### Freezable:
+The base class for all objects that can be “frozen” into a read-only state. Once frozen, they cannot be unfrozen.
+
+### Visual:
+The base class for all objects that have a visual representation.
+
+### UIElement: 
+The base class for all visual objects with support for routed events, command binding, layout, and focus support.
+
+### ContentElement: 
+A base class similar to UIElement but for pieces of content that don't have rendering behavior on their own. Instead, ContentElements are hosted in a Visual-derived class to be rendered on the screen.
+
+### FrameworkElement:
+The base class that adds support for styles, data binding, resources, and a few common mechanisms for Windows-based controls such as tooltips and context menus.
+
+### FrameworkContentElement:
+The analog to FrameworkElement for content. 
 
 
 ## Resources in WPF
