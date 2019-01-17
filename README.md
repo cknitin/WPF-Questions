@@ -256,3 +256,340 @@ You can define certain behavior of a Dependency Property using PropertyMetaData.
                 }
           }
 
+## Attached Properties
+
+These properties attached to the child control by the parent controls, these are not property of child control.
+
+Defining class must provide GerPropertyName set SetPropertyName method. In the case of grid
+Grid class may have GetRow() and SetRow()
+
+## Triggers
+### 1.Property Triggers
+
+                <Button Content="Click me to change style" Width="200" Height="30">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Foreground" Value="Blue"></Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="true">
+                                                <Trigger.Setters>
+                                                    <Setter Property="Foreground" Value="Red"></Setter>
+                                                    <Setter Property="FontWeight" Value="Bold"></Setter>
+                                                </Trigger.Setters>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                 </Button>
+
+### 2.Data Triggers
+
+                <CheckBox x:Name="ChkBx"></CheckBox>
+                 <TextBlock>
+                     <TextBlock.Style>
+                         <Style TargetType="TextBlock">
+                             <Setter Property="Text" Value="I am here!"></Setter>
+                             <Setter Property="Foreground" Value="Red"></Setter>
+                             <Setter Property="FontWeight" Value="Bold"></Setter>
+                             <Style.Triggers>
+                              <DataTrigger Binding="{Binding ElementName=ChkBx, Path=IsChecked}" Value="True">
+                                     <Setter Property="Text" Value="I am not here!"></Setter>
+                                     <Setter Property="Foreground" Value="Blue"></Setter>
+                                     <Setter Property="FontWeight" Value="Bold"></Setter>
+                              </DataTrigger>
+                             </Style.Triggers>
+                         </Style>
+                     </TextBlock.Style>
+                 </TextBlock>
+
+### 3.Event Triggers
+
+                <TextBlock Text="Hello India">
+                 <TextBlock.Style>
+                     <Style TargetType="TextBlock">
+                         <Style.Triggers>
+                             <EventTrigger RoutedEvent="MouseEnter">
+                                 <EventTrigger.Actions>
+                                     <BeginStoryboard>
+                                       <Storyboard>
+                                       <DoubleAnimation Duration="0:0:0.300" Storyboard.TargetProperty="FontSize" To="28" />
+                                       </Storyboard>
+                                      </BeginStoryboard>
+                                   </EventTrigger.Actions>
+                              </EventTrigger>
+                              <EventTrigger RoutedEvent="MouseLeave">
+                                    <EventTrigger.Actions>
+                                      <BeginStoryboard>
+                                          <Storyboard>
+                                       <DoubleAnimation Duration="0:0:0.300" Storyboard.TargetProperty="FontSize" To="15">                                                      </DoubleAnimation>
+                                          </Storyboard>
+                                     </BeginStoryboard>
+                                   </EventTrigger.Actions>
+                               </EventTrigger>
+                            </Style.Triggers>
+                          </Style>
+                        </TextBlock.Style>
+                     </TextBlock>
+
+## Binding Modes
+### 1.OneWay
+### 2.TwoWay
+### 3.OneWayToSource
+### 4.OneTime
+### 5.Default
+
+## UpdateSourceTrigger
+### 1.Default
+### 2.Explicit
+### 3.LostFocus
+### 4.PropertyChanges
+
+## IValueConverter
+
+                class YesNoToBooleanConverter : IValueConverter
+                {
+                    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+                    {
+                        if (value is string && !string.IsNullOrEmpty(value.ToString()))
+                        {
+                            switch (value.ToString().ToLower())
+                            {
+                                case "yes":
+                                    return true;
+                                case "no":
+                                    return false;
+
+                            }
+                        }
+
+                        return false;
+                    }
+
+                 public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+                        {
+                            if (value is bool)
+                            {
+                                if ((bool)value == true)
+                                    return "yes";
+                                else
+                                    return "no";
+                            }
+                            return "no";
+                        }
+                }
+
+
+                <Window x:Class="WpfAppDemo.WindowDynamicResource"
+                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                        mc:Ignorable="d"
+                        xmlns:local="clr-namespace:WpfAppDemo"
+                        Title="WindowDynamicResource" Height="450" Width="800">
+                    <Window.Resources>
+                        <local:YesNoToBooleanConverter x:Key="YesNoToBoolean"></local:YesNoToBooleanConverter>
+                    </Window.Resources>
+                    <Grid Margin="50">
+                        <StackPanel Orientation="Vertical">
+
+                            <TextBox x:Name="txtValue" Height="30" Width="100"></TextBox>
+                            <TextBlock Text="{Binding ElementName=txtValue, Path=Text, Converter={StaticResource YesNoToBoolean}}">                                 </TextBlock>
+
+                        </StackPanel>
+                    </Grid>
+                </Window>
+
+## INotifyPropertyChanged
+
+           class Person : INotifyPropertyChanged
+            {
+                public Person()
+                {
+                    this.FirstName = "Jcob";
+                    this.LastName = "Marsh";
+                }
+
+                public event PropertyChangedEventHandler PropertyChanged;
+
+                public void OnPropertyChange(string propertyName)
+                {
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                    }
+                }
+
+
+                private string Fname;
+                public string FirstName
+                {
+                    get { return Fname; }
+                    set
+                    {
+                        Fname = value;
+                        OnPropertyChange("FirstName");
+                        OnPropertyChange("FullName");
+                    }
+                }
+
+
+                private string Lname;
+                public string LastName
+                {
+                    get { return Lname; }
+                    set
+                    {
+                        Lname = value;
+                        OnPropertyChange("FirstName");
+                        OnPropertyChange("FullName");
+                    }
+                }
+
+                private string FuName;
+
+                public string FullName
+                {
+                    get { return FirstName+" "+LastName; }
+                    set
+                    {
+                        FuName = value;
+                        OnPropertyChange("FullName");
+                    }
+                }
+        }
+
+
+        <Window x:Class="INotifyPropertyChangedDemo.MainWindow"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:local="clr-namespace:INotifyPropertyChangedDemo"
+                mc:Ignorable="d"
+                Title="MainWindow" Height="450" Width="800">
+            <Window.Resources>
+                <local:Person x:Key="Person"></local:Person>
+            </Window.Resources>
+            <Grid DataContext="{StaticResource Person}">
+
+                <StackPanel>
+                    <TextBox x:Name="FirstName" Text="{Binding Path=FirstName, Mode=TwoWay}"></TextBox>
+                    <TextBox x:Name="LastName" Text="{Binding Path=LastName, Mode=TwoWay}"></TextBox>
+                    <TextBlock Text="{Binding Path=FullName}"></TextBlock>
+                </StackPanel>
+
+            </Grid>
+        </Window>
+
+## ICommand
+
+            class Person : INotifyPropertyChanged
+            {
+                public Person()
+                {
+                    this.FirstName = "Jcob";
+                    this.LastName = "Marsh";
+                }
+
+                public event PropertyChangedEventHandler PropertyChanged;
+
+                public void OnPropertyChange(string propertyName)
+                {
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                    }
+                }
+
+
+                private string Fname;
+                public string FirstName
+                {
+                    get { return Fname; }
+                    set
+                    {
+                        Fname = value;
+                        OnPropertyChange("FirstName");
+                        OnPropertyChange("FullName");
+                    }
+                }
+
+
+                private string Lname;
+                public string LastName
+                {
+                    get { return Lname; }
+                    set
+                    {
+                        Lname = value;
+                        OnPropertyChange("FirstName");
+                        OnPropertyChange("FullName");
+                    }
+                }
+
+                private string FuName;
+
+                public string FullName
+                {
+                    get { return FirstName+" "+LastName; }
+                    set
+                    {
+                        FuName = value;
+                        OnPropertyChange("FullName");
+                    }
+                }
+
+
+
+
+            }
+
+
+            public class ViewModelBase
+            {
+                public SimpleCommand SimpleCommand { get; set; }
+
+                public ViewModelBase()
+                {
+                    this.SimpleCommand = new SimpleCommand(this);
+                }
+
+                public void SimpleMethod()
+                {
+                    MessageBox.Show("Simple Method()");
+                }
+            }
+
+
+            public class SimpleCommand : ICommand
+            {
+                public event EventHandler CanExecuteChanged;
+
+                public ViewModelBase ViewBaseModel { get; set; }
+                public SimpleCommand(ViewModelBase viewModelBase)
+                {
+                    this.ViewBaseModel = viewModelBase;
+                }
+
+                public bool CanExecute(object parameter)
+                {
+                    return true;
+                }
+
+                public void Execute(object parameter)
+                {
+                    this.ViewBaseModel.SimpleMethod();
+                }
+          }
+
+
+         xmlns:vm="clr-namespace:INotifyPropertyChangedDemo.ViewModel"
+
+
+        <Button Content="Simple Command" Command="{Binding SimpleCommand, Source={StaticResource viewModel}}"></Button>
+
+
+        <Window.Resources>
+                <vm:ViewModelBase x:Key="viewModel"></vm:ViewModelBase>
+        </Window.Resources>
