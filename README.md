@@ -202,3 +202,57 @@ You can define a Resource for the definition of a Dependency Property in XAML.
 
 ### Overriding Metadata
 You can define certain behavior of a Dependency Property using PropertyMetaData. Thus, overriding a meta data from a derived property will not require you to redefine or re-implement the entire property definition.
+
+        public class CarDependencyProperty : DependencyObject
+         {
+                //Register Dependency Property
+                public static readonly DependencyProperty CarDependency = DependencyProperty.Register("MyProperty", typeof(string),                         typeof(MainWindow));
+                public string MyCarProperty
+                {
+                    get
+                    {
+                        return (string)GetValue(CarDependency);
+                    }
+                    set
+                    {
+                        SetValue(CarDependency, value);
+                    }
+                }
+        }
+        
+          <Window x:Class="CustomDependencyProperties.MainWindow"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:local="clr-namespace:CustomDependencyProperties"
+                mc:Ignorable="d"
+                Title="MainWindow" Height="450" Width="800">
+            <Window.Resources>
+                <local:CarDependencyProperty x:Key="CarDependency" />
+            </Window.Resources> 
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Label Content="Enter Car:" Grid.Row="0"
+                   VerticalAlignment="Center" />
+                <TextBox Text="{Binding Path=MyCarProperty, Source={StaticResource CarDependency }}" Name="MyTextCar" Height="25" 			Width="150" />
+                <Button Name="MyButton" Content="Click Me!" Click="MyButton_Click" Height="25" Width="150" Grid.Row="1" />
+            </Grid>
+        </Window>
+        
+         public partial class MainWindow : Window
+         {
+                public MainWindow()
+                {
+                    InitializeComponent();
+                }
+                private void MyButton_Click(object sender, RoutedEventArgs e)
+                {
+                    CarDependencyProperty dpSample = TryFindResource("CarDependency") as CarDependencyProperty;
+                    MessageBox.Show(dpSample.MyCarProperty);
+                }
+          }
+
