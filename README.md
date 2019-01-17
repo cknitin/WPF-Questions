@@ -52,8 +52,42 @@ Takes as much space as available (after filling all auto and fixed sized columns
 
 2. Stack Panel
 3. Dock Panel
+
+        <DockPanel LastChildFill="True">
+                 <Button Content="Dock=Top" DockPanel.Dock="Top"/>
+                 <Button Content="Dock=Bottom" DockPanel.Dock="Bottom"/>
+                 <Button Content="Dock=Left"/>
+                 <Button Content="Dock=Right" DockPanel.Dock="Right"/>
+                 <Button Content="LastChildFill=True"/>
+        </DockPanel>
+
 4. Wrap Panel
+
+        <WrapPanel Orientation="Horizontal">
+                 <Button Content="Button" />
+                 <Button Content="Button" />
+                 <Button Content="Button" />
+                 <Button Content="Button" />
+                 <Button Content="Button" />
+        </WrapPanel>
+
 5. Canvas
+
+        <Canvas>
+                 <Rectangle Canvas.Left="40" Canvas.Top="31" Width="63" Height="41" Fill="Blue"/>
+                 <Ellipse Canvas.Left="130" Canvas.Top="79" Width="58" Height="58" Fill="Blue" />
+                 <Path Canvas.Left="61" Canvas.Top="28" Width="133" Height="98" Fill="Blue"
+                 Stretch="Fill" Data="M61,125 L193,28"/>
+        </Canvas>
+        
+ OR
+ 
+         <Canvas>
+                 <Ellipse Fill="Green" Width="60" Height="60" Canvas.Left="30" Canvas.Top="20" Canvas.ZIndex="1"/>
+                 <Ellipse Fill="Blue" Width="60" Height="60" Canvas.Left="60" Canvas.Top="40"/>
+        </Canvas>
+
+
 
 ### 1.Windows Resources
 
