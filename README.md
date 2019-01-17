@@ -62,7 +62,7 @@ Takes as much space as available (after filling all auto and fixed sized columns
          
  OR
  
-        <StackPanel <span style="color:yellow"> Orientation="Horizontal" </span> Height="49" Width="247">
+        <StackPanel Orientation="Horizontal" Height="49" Width="247">
                  <Button Width="100" Margin="10">OK</Button>
                  <Button Width="100" Margin="10">Cancel</Button>
          </StackPanel>
